@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Familles{% endblock %}
+
+{% block monTitre %}Famille {{famille.libelle}}{% endblock %}
+{% block body %}
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{famille.libelle}}</h5>
+                    <p>Description : {{famille.description}}</p>
+                    {% for animal in famille.animaux %}
+                        {{animal.nom}}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

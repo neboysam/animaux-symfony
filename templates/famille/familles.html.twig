@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des familles{% endblock %}
+
+{% block monTitre %}Liste des familles{% endblock %}
+{% block body %}
+    {% for famille in familles %}
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+            <div class="col-md-8">
+                <div class="card-body">
+                    <a href="{{path('afficherFamille', {'id': famille.id})}}"><h5 class="card-title">{{famille.libelle|capitalize}}</h5></a>
+                    <p>Description : {{famille.description}}</p>
+                    {# <a href="{{path('afficherAnimal', {'id': animal.id})}}" class="btn btn-primary d-inline-block">Details</a>
+                    <a href="{{path('afficherFamille', {'id': animal.famille.id})}}" class="btn btn-success">{{animal.famille.libelle}}</a> #}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}
