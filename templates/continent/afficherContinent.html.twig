@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Continents{% endblock %}
+
+{% block monTitre %}Continent {{continent.libelle}}{% endblock %}
+{% block body %}
+    <div class="card mb-3 mx-auto" style="max-width: 540px;">
+        <div class="row g-0">
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">La liste des animaux en {{continent.libelle}}</h5>
+                    <div class="row">
+                        {% for animal in continent.animaux %}
+                            <div class="col-md-4 my-2">
+                                <img src="{{asset('images/' ~ animal.image)}}" class="img-fluid rounded-start" alt="card image">
+                            </div>
+                            <div class="col-md-6 my-2">
+                                <a href="{{path('afficherAnimal', {'id': animal.id})}}"><h5 class="card-title">{{animal.nom}}</h5></a>
+                                <p>Description : {{animal.description}}</p>
+                            </div>
+                            <div class="col my-2">
+                                <div>
+                                    <a href="{{path('afficherAnimal', {'id': animal.id})}}" class="btn btn-primary d-inline-block">Details</a>
+                                </div>
+                                <div>
+                                    {% for selectedContinent in animal.continents %}
+                                        {% if selectedContinent.id != continent.id %}
+                                            <a href="{{path('afficherContinent', {'id': selectedContinent.id})}}" class="btn btn-warning">{{selectedContinent.libelle}}</a>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

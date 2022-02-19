@@ -1,24 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Page d'accueil{% endblock %}
+{% block title %}Page d'accueil - Animaux{% endblock %}
 
 {% block monTitre %}La liste des animaux{% endblock %}
 {% block body %}
     {% for animal in animaux %}
-    <div class="card mb-3" style="max-width: 540px;">
-        <div class="row g-0">
-            <div class="col-md-4">
-                <img src="{{asset('images/' ~ animal.image)}}" class="img-fluid rounded-start" alt="card image">
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
+        <div class="card mb-3 mx-3" style="max-width: 640px;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="{{asset('images/' ~ animal.image)}}" class="img-fluid rounded-start" alt="card image">
+                </div>
+                <div class="col-md-8">
                     <a href="{{path('afficherAnimal', {'id': animal.id})}}"><h5 class="card-title">{{animal.nom}}</h5></a>
                     <p>Description : {{animal.description}}</p>
                     <a href="{{path('afficherAnimal', {'id': animal.id})}}" class="btn btn-primary d-inline-block">Details</a>
                     <a href="{{path('afficherFamille', {'id': animal.famille.id})}}" class="btn btn-success">{{animal.famille.libelle}}</a>
+                    <div class="my-3">
+                        {% for continent in animal.continents %}
+                            <a href="{{path('afficherContinent', {'id': continent.id})}}" class="btn btn-warning">{{continent.libelle}}</a>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     {% endfor %}
 {% endblock %}

@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des familles{% endblock %}
+{% block title %}Familles{% endblock %}
 
-{% block monTitre %}Liste des familles{% endblock %}
+{% block monTitre %}La liste des familles{% endblock %}
 {% block body %}
     <div class="container">
         <div class="row">
@@ -24,6 +24,11 @@
                                         <p>Description : {{animal.description}}</p>
                                         <a href="{{path('afficherAnimal', {'id': animal.id})}}" class="btn btn-primary d-inline-block">Details</a>
                                     </div>
+                                </div>
+                                <div>
+                                    {% for continent in animal.continents %}
+                                        <a href="{{path('afficherContinent', {'id': continent.id})}}" class="btn btn-warning m-1">{{continent.libelle}}</a>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
