@@ -14,16 +14,17 @@
                 <p>Description : {{animal.description}}</p>
                 <p>Poids : {{animal.poids}} kg</p>
                 <p>Dangereux : 
-                {% if animal.dangereux %}
-                    <span class="badge bg-danger">
-                        Oui
-                    </span>
-                {% else %}
-                    <span class="badge bg-success">
-                        No
-                    </span>
-                {% endif %}
+                    {% if animal.dangereux %}
+                        <span class="badge bg-danger">
+                            Oui
+                        </span>
+                    {% else %}
+                        <span class="badge bg-success">
+                            No
+                        </span>
+                    {% endif %}
                 </p>
+                <a href="{{path('afficherFamille', {'id': animal.famille.id})}}" class="btn btn-primary">{{animal.famille.libelle|capitalize}}</a>
             </div>
         </div>
     </div>

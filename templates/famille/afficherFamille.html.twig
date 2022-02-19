@@ -2,17 +2,28 @@
 
 {% block title %}Familles{% endblock %}
 
-{% block monTitre %}Famille {{famille.libelle}}{% endblock %}
+{% block monTitre %}Famille {{famille.libelle|capitalize}}{% endblock %}
 {% block body %}
-    <div class="card mb-3" style="max-width: 540px;">
+    <div class="card mb-3 mx-auto" style="max-width: 540px;">
         <div class="row g-0">
             <div class="col-md-8">
                 <div class="card-body">
-                    <h5 class="card-title">{{famille.libelle}}</h5>
+                    <h5 class="card-title">{{famille.libelle|capitalize}}</h5>
                     <p>Description : {{famille.description}}</p>
-                    {% for animal in famille.animaux %}
-                        {{animal.nom}}
-                    {% endfor %}
+                    <div class="row">
+                        {% for animal in famille.animaux %}
+                            <div class="col-md-4 my-2">
+                                <img src="{{asset('images/' ~ animal.image)}}" class="img-fluid rounded-start" alt="card image">
+                            </div>
+                            <div class="col-md-6 my-2">
+                                <a href="{{path('afficherAnimal', {'id': animal.id})}}"><h5 class="card-title">{{animal.nom}}</h5></a>
+                                <p>Description : {{animal.description}}</p>
+                            </div>
+                            <div class="col-2 my-2">
+                                <a href="{{path('afficherAnimal', {'id': animal.id})}}" class="btn btn-primary d-inline-block">Details</a>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
