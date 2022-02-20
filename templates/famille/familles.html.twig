@@ -2,39 +2,32 @@
 
 {% block title %}Familles{% endblock %}
 
-{% block monTitre %}La liste des familles{% endblock %}
+{% block monTitre %}Pages listant les familles{% endblock %}
 {% block body %}
-    <div class="container">
-        <div class="row">
-            {% for famille in familles %}
-                <div class="col-md-5">
-                    <a href="{{path('afficherFamille', {'id': famille.id})}}"><h5 class="card-title">{{famille.libelle|capitalize}}</h5></a>
-                    <p>Description : {{famille.description}}</p>
-                    {# <a href="{{path('afficherAnimal', {'id': animal.id})}}" class="btn btn-primary d-inline-block">Details</a>
-                    <a href="{{path('afficherFamille', {'id': animal.famille.id})}}" class="btn btn-success">{{animal.famille.libelle}}</a> #}
-                    {% for animal in famille.animaux %}
-                        <div class="card mb-3" style="max-width: 540px;">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img src="{{asset('images/' ~ animal.image)}}" class="img-fluid rounded-start" alt="card image">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <a href="{{path('afficherAnimal', {'id': animal.id})}}"><h5 class="card-title">{{animal.nom}}</h5></a>
-                                        <p>Description : {{animal.description}}</p>
-                                        <a href="{{path('afficherAnimal', {'id': animal.id})}}" class="btn btn-primary d-inline-block">Details</a>
-                                    </div>
-                                </div>
-                                <div>
-                                    {% for continent in animal.continents %}
-                                        <a href="{{path('afficherContinent', {'id': continent.id})}}" class="btn btn-warning m-1">{{continent.libelle}}</a>
-                                    {% endfor %}
-                                </div>
-                            </div>
+{% for famille in familles %}
+    <h2 class="border-bottom border-primary"><a href="{{path('afficherFamille',{'id':famille.id})}}">{{ famille.libelle|capitalize }}</a></h2>
+    <div>{{ famille.description }}</div>
+    <div class="row">
+        {% for animal in famille.animaux %}
+            <div class="col-6">
+                <div class="row align-items-center">
+                    <div class="col-12 cold-md-6 col-lg-2 text-center">
+                        <img src="{{asset('images/' ~ animal.image)}}" class="img-fluid">
+                    </div>
+                    <div class="col text-center">
+                        <h2><a href="{{path('afficherAnimal',{'id' : animal.id})}}">{{ animal.nom }}</a></h2>
+                        <div>{{ animal.description }}</div>
+                        <div>
+                            {% for continent in animal.continents %}
+                                <a href="{{path('afficherContinent',{'id':continent.id})}}" class="btn btn-warning">{{ continent.libelle }}</a>
+                            {% endfor %}
                         </div>
-                    {% endfor %}
+                    </div>
+                    
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+        {% endfor %}
     </div>
+{% endfor %}
 {% endblock %}
+
