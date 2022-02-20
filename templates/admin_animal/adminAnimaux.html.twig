@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des animaux{% endblock %}
+
+{% block monTitre %}Gestion des animaux{% endblock %}
+{% block body %}
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">Image</th>
+				<th scope="col">Nom</th>
+				<th scope="col">Description</th>
+                <th scope="col">Famille</th>
+				<th scope="col">Poids (kg)</th>
+				<th scope="col">Dangereux</th>
+				<th scope="col">Continents</th>
+				<th scope="col">Personnes</th>
+				<th scope="col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+            {% for animal in animaux %}
+                <tr>
+                    <td><img src="{{asset('images/' ~ animal.image)}}" class="img-fluid perso_imgFood"></td>
+                    <td>{{animal.nom}}</td>
+                    <td>{{animal.description}}</td>
+                    <td>{{animal.famille.libelle|capitalize}}</td>
+                    <td>{{animal.poids}}</td>
+                    <td>
+                        {% if animal.dangereux %}
+                            <div class="badge bg-danger">
+                                Oui
+                            </div>
+                        {% else %}
+                            <div class="badge bg-success">
+                                No
+                            </div>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% for continent in animal.continents %}
+                            {{((continent.libelle)~"\n")|nl2br}}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for element in animal.disposes %}
+                            {{((element.personne.nom)~"\n")|nl2br}}
+                        {% endfor %}
+                        {# {{ dump(animal.disposes) }} #}
+                    </td>
+                    <td><a href="{{path('adminModifAnimal', {'id': animal.id})}}" class="btn btn-outline-warning">Modifier</a></td>
+                    <td><a href="" class="btn btn-outline-danger">Supprimer</a></td>
+                </tr>
+            {% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

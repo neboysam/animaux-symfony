@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des continents{% endblock %}
+
+{% block monTitre %}Gestion de continent {{continent.libelle}}{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                {{form_start(form)}}
+                    {{form_row(form.libelle)}}
+                    <input type="submit" class="btn btn-primary" value="Enregistrer">
+                {{form_end(form)}}
+            </div>
+        </div>
+    </div>
+{% endblock %}

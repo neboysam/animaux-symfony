@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des continents{% endblock %}
+
+{% block monTitre %}Gestion des continents{% endblock %}
+{% block body %}
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">Libelle</th>
+				<th scope="col">Animaux</th>
+				<th scope="col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+            {% for continent in continents %}
+                <tr>
+                    <td>{{continent.libelle}}</td>
+                    <td>
+                        {% for animal in continent.animaux %}
+                            {{((animal.nom)~"\n")|nl2br}}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a href="{{path('adminModifContinent', {'id': continent.id})}}" class="btn btn-outline-warning">Modifier</a>
+                        <a href="" class="btn btn-outline-danger">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

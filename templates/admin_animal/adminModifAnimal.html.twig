@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des animaux{% endblock %}
+
+{% block monTitre %}Gestion d'animal {{animal.nom}}{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                {{form_start(form)}}
+                    {{form_row(form.nom)}}
+                    {{form_row(form.description)}}
+                    {{form_row(form.image)}}
+            </div>
+            <div class="col-6">
+                    {{form_row(form.poids)}}
+                    {{form_row(form.dangereux)}} 
+                    {{form_row(form.famille)}}
+                    <input type="submit" class="btn btn-primary" value="Enregistrer">
+                {{form_end(form)}}
+            </div>
+        </div>
+    </div>
+{% endblock %}

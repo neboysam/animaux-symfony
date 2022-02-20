@@ -10,6 +10,7 @@
                 <div class="card mb-3" style="max-width: 540px;">
                 <h3 class=""><a href="">{{personne.nom}}</a></h3>
                     <div class="row g-0">
+                    <h4>Liste des animaux possédés</h4>
                         {% for element in personne.disposes %}{# personne.disposes is an object containing id, nb and two objects: animal and personne #}
                             <div class="col-md-4">
                                 <img src="{{asset('images/' ~ element.animal.image)}}" class="img-fluid rounded-start perso-imgFood" alt="image">

@@ -29,28 +29,34 @@
 
 				<div class="collapse navbar-collapse" id="navbarColor02">
 					<ul class="navbar-nav me-auto">
-						<li class="nav-item">
-							<a class="nav-link" href="{{path('animaux')}}">Animaux</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="{{path('familles')}}">Familles</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="{{path('continents')}}">Continents</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="{{path('personnes')}}">Personnes</a>
-						</li>
-						{# <li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Animaux</a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item" href="#">Action</a>
-								<a class="dropdown-item" href="#">Another action</a>
-								<a class="dropdown-item" href="#">Something else here</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#">Separated link</a>
+								<a class="dropdown-item" href="{{path('animaux')}}">Animaux</a>
+								<a class="dropdown-item" href="{{path('adminAnimaux')}}">Gestion des animaux</a>
 							</div>
-						</li> #}
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Familles</a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="{{path('familles')}}">Familles</a>
+								<a class="dropdown-item" href="#">Gestion des familles</a>
+							</div>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Continents</a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="{{path('continents')}}">Continents</a>
+								<a class="dropdown-item" href="{{path('adminContinents')}}">Gestion des continents</a>
+							</div>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Personnes</a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="{{path('personnes')}}">Personnes</a>
+								<a class="dropdown-item" href="#">Gestion des personnes</a>
+							</div>
+						</li>
 					</ul>
 				</div>
 			</div>

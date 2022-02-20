@@ -4,6 +4,11 @@
 
 {% block monTitre %}La liste des animaux{% endblock %}
 {% block body %}
+    {% for message in app.flashes('success') %}
+		<div class="alert alert-success">
+			{{message}}
+		</div>
+	{% endfor %}
     <div class="container">
         <div class="row no-gutters">
             {% for animal in animaux %}

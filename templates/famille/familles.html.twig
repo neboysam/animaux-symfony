@@ -5,29 +5,30 @@
 {% block monTitre %}La liste des familles{% endblock %}
 {% block body %}
 {% for famille in familles %}
-<div class="container">
-    <h2 class="border-bottom border-primary"><a href="{{path('afficherFamille',{'id':famille.id})}}">{{ famille.libelle|capitalize }}</a></h2>
-    <div>{{ famille.description }}</div>
-    <div class="row">
-        {% for animal in famille.animaux %}
-            <div class="col-6">
-                <div class="row align-items-center">
-                    <div class="col-12 cold-md-6 col-lg-2 text-center">
-                        <img src="{{asset('images/' ~ animal.image)}}" class="img-fluid">
-                    </div>
-                    <div class="col text-center">
-                        <h2><a href="{{path('afficherAnimal',{'id' : animal.id})}}">{{ animal.nom }}</a></h2>
-                        <div>{{ animal.description }}</div>
-                        <div>
-                            {% for continent in animal.continents %}
-                                <a href="{{path('afficherContinent',{'id':continent.id})}}" class="btn btn-warning">{{ continent.libelle }}</a>
-                            {% endfor %}
+    <div class="container">
+        <h2><a href="{{path('afficherFamille',{'id':famille.id})}}">{{ famille.libelle|capitalize }}</a></h2>
+        <div>{{ famille.description }}</div>
+        <div class="row">
+            {% for animal in famille.animaux %}
+                <div class="col-6">
+                    <div class="row align-items-center">
+                        <div class="col-12 cold-md-6 col-lg-2 text-center">
+                            <img src="{{asset('images/' ~ animal.image)}}" class="img-fluid">
+                        </div>
+                        <div class="col text-center">
+                            <h2><a href="{{path('afficherAnimal',{'id' : animal.id})}}">{{ animal.nom }}</a></h2>
+                            <div>{{ animal.description }}</div>
+                            <div>
+                                {% for continent in animal.continents %}
+                                    <a href="{{path('afficherContinent',{'id':continent.id})}}" class="btn btn-warning mb-2">{{ continent.libelle }}</a>
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
+        <h2 class="border-bottom border-primary"><h2>
     </div>
 {% endfor %}
 {% endblock %}
