@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PersonneController!{% endblock %}
+
+{% block monTitre %}La liste des personnes{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row d-flex justify-content-around">
+            {% for personne in personnes %}
+                <div class="card mb-3" style="max-width: 540px;">
+                <h3 class=""><a href="">{{personne.nom}}</a></h3>
+                    <div class="row g-0">
+                        {% for element in personne.disposes %}{# personne.disposes is an object containing id, nb and two objects: animal and personne #}
+                            <div class="col-md-4">
+                                <img src="{{asset('images/' ~ element.animal.image)}}" class="img-fluid rounded-start perso-imgFood" alt="image">
+                                {# {{ dump(personne.disposes) }} #}
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title"><a href="{{path('afficherAnimal', {'id': element.animal.id})}}">{{element.animal.nom}}</a></h5>
+                                    <p class="card-text">Nombre : {{element.nb}}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

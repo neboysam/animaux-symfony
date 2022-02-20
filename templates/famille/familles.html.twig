@@ -2,9 +2,10 @@
 
 {% block title %}Familles{% endblock %}
 
-{% block monTitre %}Pages listant les familles{% endblock %}
+{% block monTitre %}La liste des familles{% endblock %}
 {% block body %}
 {% for famille in familles %}
+<div class="container">
     <h2 class="border-bottom border-primary"><a href="{{path('afficherFamille',{'id':famille.id})}}">{{ famille.libelle|capitalize }}</a></h2>
     <div>{{ famille.description }}</div>
     <div class="row">
@@ -23,10 +24,10 @@
                             {% endfor %}
                         </div>
                     </div>
-                    
                 </div>
             </div>
         {% endfor %}
+    </div>
     </div>
 {% endfor %}
 {% endblock %}

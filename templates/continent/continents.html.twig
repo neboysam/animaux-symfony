@@ -4,21 +4,22 @@
 
 {% block monTitre %}Liste des continents{% endblock %}
 {% block body %}
-    {% for continent in continents %}
-    <h3 class="border-bottom border-primary mx-2"><a href="{{path('afficherContinent', {'id': continent.id})}}" class="btn btn-warning mb-2">Les animaux en {{continent.libelle}} :</a></h3>
-        {% for animal in continent.animaux %}
-            <div class="container">
+    <div class="container">
+        {% for continent in continents %}
+        <a href="{{path('afficherContinent', {'id': continent.id})}}" class="btn btn-warning mb-2">Les animaux en {{continent.libelle}} :</a>
+            {% for animal in continent.animaux %}
                 <div class="row align-items-center">
                     <div class="col-4">
                         <img src="{{asset('images/' ~ animal.image)}}" class="img-fluid"> 
                     </div>
-                    <div class="col-4">
+                    <div class="col-4 mb-5">
                         <h3>{{animal.nom}}</h3>
                         <p>Description : {{animal.description}}</p>
                         <a href="{{path('afficherFamille', {'id': animal.famille.id})}}" class="btn btn-primary">{{animal.famille.libelle}}</a>
                     </div>
                 </div>
-            </div>
+            {% endfor %}
+            <h3 class="border-bottom border-primary mx-2"></h3>
         {% endfor %}
-    {% endfor %}
+    </div>
 {% endblock %}
