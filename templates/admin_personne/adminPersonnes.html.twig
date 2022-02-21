@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des personnes{% endblock %}
+
+{% block monTitre %}Gestion des personnes{% endblock %}
+{% block body %}
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">Nom</th>
+				<th scope="col">Animaux</th>
+				<th scope="col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+            {% for personne in personnes %}
+                <tr>
+                    <td>{{personne.nom}}</td>
+                    <td>
+                        {% for element in personne.disposes %}
+                            {{((element.animal.nom)~"\n")|nl2br}}
+                        {% endfor %}
+                        {# {{ dump(animal.disposes) }} #}
+                    </td>
+                    <td><a href="{{path('adminModifPersonne', {'id': personne.id})}}" class="btn btn-outline-warning">Modifier</a></td>
+                    <td><a href="" class="btn btn-outline-danger">Supprimer</a></td>
+                </tr>
+            {% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

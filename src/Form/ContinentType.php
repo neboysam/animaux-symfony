@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Animal;
 use App\Entity\Continent;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,8 +16,10 @@ class ContinentType extends AbstractType
         $builder
             ->add('libelle')
             ->add('animaux', EntityType::class, [
-                'class' => Continent::class,
-                'choices' => $continent->getAnimaux()
+                'class' => Animal::class,
+                'choice_label' => 'nom',
+                'multiple' => true,
+                'expanded' => true
             ])
         ;
     }

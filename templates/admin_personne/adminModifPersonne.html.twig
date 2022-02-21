@@ -1,18 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Gestion des continents{% endblock %}
+{% block title %}Gestion des personnes{% endblock %}
 
-{% block monTitre %}Gestion de continent {{continent.libelle}}{% endblock %}
+{% block monTitre %}Gestion de personne {{personne.nom}}{% endblock %}
 {% block body %}
     <div class="container">
         <div class="row">
             <div class="col-6">
                 {{form_start(form)}}
-                    {{form_row(form.libelle)}}
-                    {{form_row(form.animaux)}}
+                    
                     <input type="submit" class="btn btn-primary" value="Enregistrer">
                 {{form_end(form)}}
             </div>
         </div>
     </div>
+    
 {% endblock %}

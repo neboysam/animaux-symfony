@@ -16,9 +16,11 @@
                     {{form_row(form.poids)}}
                     {{form_row(form.dangereux)}} 
                     {{form_row(form.famille)}}
+                    {{form_row(form.continents)}}
                     <input type="submit" class="btn btn-primary" value="Enregistrer">
                 {{form_end(form)}}
             </div>
         </div>
     </div>
+    {{dump(animal)}}
 {% endblock %}
