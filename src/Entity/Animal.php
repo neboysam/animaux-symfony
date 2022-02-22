@@ -2,13 +2,17 @@
 
 namespace App\Entity;
 
-use App\Repository\AnimalRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AnimalRepository;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass=AnimalRepository::class)
+ * @Vich\Uploadable
  */
 class Animal
 {
@@ -35,6 +39,33 @@ class Animal
     private $image;
 
     /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     * 
+     * @Vich\UploadableField(mapping="animal_image", fileNameProperty="image")
+     */
+    private $imageFile;
+
+    public function setImageFile(?File $imageFile = null): self
+    {
+        $this->imageFile = $imageFile;
+        if($this->imageFile instanceof UploadedFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+        return $this;
+
+        /* if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        } */
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
      * @ORM\Column(type="integer")
      */
     private $poids;
@@ -59,6 +90,11 @@ class Animal
      * @ORM\OneToMany(targetEntity=Dispose::class, mappedBy="animal")
      */
     private $disposes;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $updatedAt;
 
     public function __construct()
     {
@@ -196,6 +232,18 @@ class Animal
                 $dispose->setAnimal(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

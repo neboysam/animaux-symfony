@@ -10,7 +10,7 @@
                 {{form_start(form)}}
                     {{form_row(form.nom)}}
                     {{form_row(form.description)}}
-                    {{form_row(form.image)}}
+                    {{form_row(form.imageFile)}}
             </div>
             <div class="col-6">
                     {{form_row(form.poids)}}
@@ -22,5 +22,5 @@
             </div>
         </div>
     </div>
-    {{dump(animal)}}
+    {# {{dump(animal)}} #}
 {% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des familles{% endblock %}
+
+{% block monTitre %}Gestion des familles{% endblock %}
+{% block body %}
+<a href="{{path('adminCreatFamille')}}" class="btn btn-primary ms-2">Ajouter</a>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">Libelle</th>
+				<th scope="col">Description</th>
+                <th scope="col">Animaux</th>
+				<th scope="col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+            {% for famille in familles %}
+                <tr>
+                    <td>{{famille.libelle|capitalize}}</td>
+                    <td>{{famille.description}}</td>
+                    <td>
+                        {% for animal in famille.animaux %}
+                            {{((animal.nom)~"\n")|nl2br}}
+                        {% endfor %}
+                        {# {{ dump(animal.disposes) }} #}
+                    </td>
+                    <td><a href="{{path('adminModifFamille', {'id': famille.id})}}" class="btn btn-outline-warning">Modifier</a></td>
+                    <td><a href="" class="btn btn-outline-danger">Supprimer</a></td>
+                </tr>
+            {% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
