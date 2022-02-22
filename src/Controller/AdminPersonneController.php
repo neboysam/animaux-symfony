@@ -25,20 +25,21 @@ class AdminPersonneController extends AbstractController
     }
 
     /**
+     * @Route("/admin/creation/personne", name="adminCreatPersonne")
      * @Route("/admin/personne/{id}", name="adminModifPersonne")
      */
-    public function adminModifPersonnes(Personne $personne, Request $request, EntityManagerInterface $manager): Response
+    public function adminModifPersonnes(Personne $personne = null, Request $request, EntityManagerInterface $manager): Response
     {
+        if(!$personne) {
+            $personne = new Personne();
+        }
         $form = $this->createForm(PersonneType::class, $personne);
-
         $form->handleRequest($request);
-
         if($form->isSubmitted() && $form->isValid()) {
             $manager->persist($personne);
             $manager->flush();
             return $this->redirectToRoute('adminPersonnes');
         }
-
         return $this->render('admin_personne/adminModifPersonne.html.twig', [
             'personne' => $personne,
             'form' => $form->createView()
