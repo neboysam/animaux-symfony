@@ -19,7 +19,9 @@ class AnimalType extends AbstractType
         $builder
             ->add('nom')
             ->add('description')
-            ->add('imageFile', FileType::class, ['required' => false])
+            ->add('imageFile', FileType::class, [
+                'required' => false
+            ])
             ->add('poids')
             ->add('dangereux')
             ->add('famille', EntityType::class, [

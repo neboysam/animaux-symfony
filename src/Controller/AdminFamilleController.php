@@ -26,7 +26,7 @@ class AdminFamilleController extends AbstractController
 
     /**
      * @Route("/admin/famille/creation", name="adminCreatFamille")
-     * @Route("/admin/famille/{id}", name="adminModifFamille")
+     * @Route("/admin/famille/{id}", name="adminModifFamille", methods={"GET|POST"})
      */
     public function adminModifFamilles(Famille $famille = null, Request $request, EntityManagerInterface $manager): Response
     {
@@ -46,4 +46,14 @@ class AdminFamilleController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/admin/famille/suppression/{id}", name="adminSuppFamille", methods={"POST"})
+     */
+    public function adminSuppFamille(Famille $famille, Request $request, EntityManagerInterface $manager): Response
+    {
+        $manager->remove($famille);
+        $manager->flush();
+        return $this->redirectToRoute('adminFamilles');
+    }   
 }

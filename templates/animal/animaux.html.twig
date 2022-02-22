@@ -29,12 +29,16 @@
                         </div>
                         <div class="my-3 mx-1">
                             {% for continent in animal.continents %}
-                                <a href="{{path('afficherContinent', {'id': continent.id})}}" class="btn btn-warning">{{continent.libelle}}</a>
+                                <a href="{{path('afficherContinent', {'id': continent.id})}}" class="btn btn-info">{{continent.libelle}}</a>
                             {% endfor %}
                         </div>
                         <div class="row mb-2">
-                            <a href="" class="col-4 btn btn-warning mx-3">Modifier</a>
-                            <a href="" class="col-4 btn btn-danger">Supprimer</a>
+                            <a href="{{path('adminModifAnimal', {'id': animal.id})}}" class="col-4 btn btn-warning mx-3">Modifier</a>
+                            <form action="{{path('adminSuppAnimal', {'id': animal.id})}}" method="POST"  class="col-4">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ animal.id)}}">
+                                <input type="submit" class="btn btn-danger" value="Supprimer">
+                            </form>
                         </div>
                     </div>
                 </div>

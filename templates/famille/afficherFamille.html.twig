@@ -13,7 +13,7 @@
                     <div class="row">
                         {% for animal in famille.animaux %}
                             <div class="col-md-4 my-2">
-                                <img src="{{asset('images/' ~ animal.image)}}" class="img-fluid rounded-start" alt="card image">
+                                <img src="{{asset('images/animaux/' ~ animal.image)}}" class="img-fluid rounded-start" alt="card image">
                             </div>
                             <div class="col-md-6 my-2">
                                 <a href="{{path('afficherAnimal', {'id': animal.id})}}"><h5 class="card-title">{{animal.nom}}</h5></a>

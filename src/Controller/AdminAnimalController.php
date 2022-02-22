@@ -26,7 +26,7 @@ class AdminAnimalController extends AbstractController
 
     /**
      * @Route("/admin/animal/creation", name="adminCreatAnimal")
-     * @Route("/admin/animal/{id}", name="adminModifAnimal")
+     * @Route("/admin/animal/{id}", name="adminModifAnimal", methods={"GET|POST"})
      */
     public function modifAnimal(Animal $animal = null, Request $request, EntityManagerInterface $manager): Response
     {
@@ -46,5 +46,18 @@ class AdminAnimalController extends AbstractController
             'animal' => $animal,
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/admin/animal/suppression/{id}", name="adminSuppAnimal", methods={"POST"})
+     */
+    public function suppressionAnimal(Animal $animal, Request $request, EntityManagerInterface $manager): Response
+    {
+        if($this->isCsrfTokenValid('SUP' . $animal->getId(), $request->get('_token'))) {
+            $manager->remove($animal);
+            $manager->flush();
+            $this->addFlash('success', "L'animale a été supprimée.");
+            return $this->redirectToRoute('adminAnimaux');
+        }
     }
 }

@@ -4,6 +4,7 @@
 
 {% block monTitre %}Gestion des continents{% endblock %}
 {% block body %}
+    <a href="{{path('adminCreatContinent')}}" class="btn btn-primary ms-2">Ajouter Continent</a>
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -23,7 +24,11 @@
                     </td>
                     <td>
                         <a href="{{path('adminModifContinent', {'id': continent.id})}}" class="btn btn-outline-warning">Modifier</a>
-                        <a href="" class="btn btn-outline-danger">Supprimer</a>
+                        <form action="{{path('adminSuppContinent', {'id': continent.id})}}" method="POST">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ continent.id)}}">
+                            <input type="submit" class="btn btn-outline-danger" value="Supprimer">
+                        </form>
                     </td>
                 </tr>
             {% endfor %}

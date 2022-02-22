@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\PersonneRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PersonneRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=PersonneRepository::class)
@@ -25,7 +25,7 @@ class Personne
     private $nom;
 
     /**
-     * @ORM\OneToMany(targetEntity=Dispose::class, mappedBy="personne")
+     * @ORM\OneToMany(targetEntity=Dispose::class, mappedBy="personne") 
      */
     private $disposes;
 

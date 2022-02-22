@@ -4,7 +4,7 @@
 
 {% block monTitre %}Gestion des familles{% endblock %}
 {% block body %}
-<a href="{{path('adminCreatFamille')}}" class="btn btn-primary ms-2">Ajouter</a>
+    <a href="{{path('adminCreatFamille')}}" class="btn btn-primary ms-2">Ajouter</a>
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -26,7 +26,13 @@
                         {# {{ dump(animal.disposes) }} #}
                     </td>
                     <td><a href="{{path('adminModifFamille', {'id': famille.id})}}" class="btn btn-outline-warning">Modifier</a></td>
-                    <td><a href="" class="btn btn-outline-danger">Supprimer</a></td>
+                    <td>
+                        <form action="{{path('adminSuppFamille', {'id': famille.id})}}" method="POST">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ famille.id)}}">
+                            <input type="submit" class="btn btn-outline-danger" value="Supprimer">
+                        </form>
+                    </td>
                 </tr>
             {% endfor %}
 		</tbody>

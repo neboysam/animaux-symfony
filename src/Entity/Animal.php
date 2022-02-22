@@ -82,12 +82,12 @@ class Animal
     private $famille;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Continent::class, mappedBy="animaux")
+     * @ORM\ManyToMany(targetEntity=Continent::class, mappedBy="animaux") 
      */
     private $continents;
 
     /**
-     * @ORM\OneToMany(targetEntity=Dispose::class, mappedBy="animal")
+     * @ORM\OneToMany(targetEntity=Dispose::class, mappedBy="animal") 
      */
     private $disposes;
 
@@ -136,7 +136,7 @@ class Animal
         return $this->image;
     }
 
-    public function setImage(string $image): self
+    public function setImage(?string $image): self
     {
         $this->image = $image;
 

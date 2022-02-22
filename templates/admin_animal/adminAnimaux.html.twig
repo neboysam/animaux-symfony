@@ -4,7 +4,7 @@
 
 {% block monTitre %}Gestion des animaux{% endblock %}
 {% block body %}
-<a href="{{path('adminCreatAnimal')}}" class="btn btn-primary ms-2">Ajouter</a>
+<a href="{{path('adminCreatAnimal')}}" class="btn btn-primary ms-2">Ajouter Animale</a>
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -22,7 +22,7 @@
 		<tbody>
             {% for animal in animaux %}
                 <tr>
-                    <td><img src="{{asset('images/' ~ animal.image)}}" class="img-fluid perso_imgFood"></td>
+                    <td><img src="{{asset('images/animaux/' ~ animal.image)}}" class="img-fluid perso_imgFood"></td>
                     <td>{{animal.nom}}</td>
                     <td>{{animal.description}}</td>
                     <td>{{animal.famille.libelle|capitalize}}</td>
@@ -50,7 +50,13 @@
                         {# {{ dump(animal.disposes) }} #}
                     </td>
                     <td><a href="{{path('adminModifAnimal', {'id': animal.id})}}" class="btn btn-outline-warning">Modifier</a></td>
-                    <td><a href="" class="btn btn-outline-danger">Supprimer</a></td>
+                    <td>
+                        <form action="{{path('adminSuppAnimal', {'id': animal.id})}}" method="POST">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ animal.id)}}">
+                            <input type="submit" class="btn btn-outline-danger" value="Supprimer">
+                        </form>
+                    </td>
                 </tr>
             {% endfor %}
 		</tbody>

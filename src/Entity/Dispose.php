@@ -21,11 +21,13 @@ class Dispose
 
     /**
      * @ORM\ManyToOne(targetEntity=Animal::class, inversedBy="disposes")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $animal;
 
     /**
      * @ORM\ManyToOne(targetEntity=Personne::class, inversedBy="disposes")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $personne;
 

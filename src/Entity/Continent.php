@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\ContinentRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ContinentRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -26,7 +26,7 @@ class Continent
     private $libelle;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Animal::class, inversedBy="continents")
+     * @ORM\ManyToMany(targetEntity=Animal::class, inversedBy="continents") 
      */
     private $animaux;
 

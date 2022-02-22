@@ -13,7 +13,7 @@
                     <h4>Liste des animaux possédés</h4>
                         {% for element in personne.disposes %}{# personne.disposes is an object containing id, nb and two objects: animal and personne #}
                             <div class="col-md-4">
-                                <img src="{{asset('images/' ~ element.animal.image)}}" class="img-fluid rounded-start perso-imgFood" alt="image">
+                                <img src="{{asset('images/animaux/' ~ element.animal.image)}}" class="img-fluid rounded-start perso-imgFood" alt="image">
                                 {# {{ dump(personne.disposes) }} #}
                             </div>
                             <div class="col-md-8">
