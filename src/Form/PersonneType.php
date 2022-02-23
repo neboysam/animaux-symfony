@@ -21,7 +21,8 @@ class PersonneType extends AbstractType
                 'choice_label' => 'nom',
                 'multiple' => true,
                 'expanded' => true,
-                'mapped' => false
+                'mapped' => false,
+                'by_reference' => false
             ])
         ;
     }

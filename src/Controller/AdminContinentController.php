@@ -26,7 +26,7 @@ class AdminContinentController extends AbstractController
 
     /**
      * @Route("/admin/creation/continent", name="adminCreatContinent")
-     * @Route("/admin/continent/{id}", name="adminModifContinent", methods={"POST"})
+     * @Route("/admin/continent/{id}", name="adminModifContinent", methods={"GET|POST"})
      */
     public function modifContinent(Continent $continent = null, Request $request, EntityManagerInterface $manager): Response
     {
@@ -48,7 +48,7 @@ class AdminContinentController extends AbstractController
     }
 
     /**
-     * @Route("/admin/continent/suppressin/{id}", name="adminSuppContinent", methods={"POST"})
+     * @Route("/admin/continent/suppression/{id}", name="adminSuppContinent", methods={"POST"})
      */
     public function suppressionContinent(Continent $continent, Request $request, EntityManagerInterface $manager): Response
     {
