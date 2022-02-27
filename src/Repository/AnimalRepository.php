@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Animal;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Animal|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +18,11 @@ class AnimalRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Animal::class);
+    }
+
+    public function findAllWithPagination() :Query {
+        return $this->createQueryBuilder('a')
+                    ->getQuery();
     }
 
     // /**

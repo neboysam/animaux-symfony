@@ -31,8 +31,12 @@ class AnimalType extends AbstractType
             ->add('continents', EntityType::class, [
                 'class' => Continent::class,
                 'choice_label' => 'libelle',
+                /* 'choice_value' => function(Continent $continents) {
+                    return $continents->getLibelle();
+                }, */
                 'multiple' => true,
-                'expanded' => true
+                'expanded' => true,
+                'mapped' => false
             ])
         ;
     }

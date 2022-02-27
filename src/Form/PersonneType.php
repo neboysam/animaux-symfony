@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Animal;
 use App\Entity\Dispose;
 use App\Entity\Personne;
+use App\Repository\AnimalRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -19,10 +20,10 @@ class PersonneType extends AbstractType
             ->add('animaux', EntityType::class, [
                 'class' => Animal::class,
                 'choice_label' => 'nom',
+                'placeholder' => 'Choisir les nom des animaux',
                 'multiple' => true,
                 'expanded' => true,
                 'mapped' => false,
-                'by_reference' => false
             ])
         ;
     }

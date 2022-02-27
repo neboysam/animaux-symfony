@@ -20,7 +20,8 @@ class FamilleType extends AbstractType
                 'class' => Animal::class,
                 'choice_label' => 'nom',
                 'multiple' => true,
-                'expanded' => true
+                'expanded' => true,
+                'mapped' => false
             ])
         ;
     }
