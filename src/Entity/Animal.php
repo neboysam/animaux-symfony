@@ -76,7 +76,7 @@ class Animal
     private $dangereux;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Famille::class, inversedBy="animaux")
+     * @ORM\ManyToOne(targetEntity=Famille::class, inversedBy="animaux", cascade={"remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $famille;

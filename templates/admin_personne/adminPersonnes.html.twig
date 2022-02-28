@@ -24,7 +24,13 @@
                         {# {{ dump(animal.disposes) }} #}
                     </td>
                     <td><a href="{{path('adminModifPersonne', {'id': personne.id})}}" class="btn btn-outline-warning">Modifier</a></td>
-                    <td><a href="" class="btn btn-outline-danger">Supprimer</a></td>
+                    <td>
+                        <form action="{{path('adminSuppPersonne', {'id': personne.id})}}" method="POST">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ personne.id)}}">
+                            <input type="submit" value="Supprimer" class="btn btn-outline-danger">
+                        </form>
+                    </td>
                 </tr>
             {% endfor %}
 		</tbody>

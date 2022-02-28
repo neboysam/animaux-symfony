@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Famille;
 use App\Form\FamilleType;
 use App\Repository\FamilleRepository;
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
+use Doctrine\DBAL\Schema\ForeignKeyConstraint;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,7 +48,7 @@ class AdminFamilleController extends AbstractController
             }
             $manager->persist($famille);
             $manager->flush();
-            $this->addFlash('success', ($modif) ? 'La famille a été modifiée.' : 'La famille a été supprimee');
+            $this->addFlash('success', ($modif) ? 'La famille a été modifiée.' : 'La famille a été ajoutée');
             return $this->redirectToRoute('adminFamilles');
         } 
         return $this->render('admin_famille/adminModifFamille.html.twig', [
@@ -60,8 +62,23 @@ class AdminFamilleController extends AbstractController
      */
     public function adminSuppFamille(Famille $famille, Request $request, EntityManagerInterface $manager): Response
     {
-        $manager->remove($famille);
-        $manager->flush();
-        return $this->redirectToRoute('adminFamilles');
+        /* if($this->isCsrfTokenValid('SUP' . $famille->getId(), $request->get('_token'))) {
+            try {
+                $manager->remove($famille);
+                $manager->flush();
+                $this->addFlash('success', 'La famille a ete supprime');
+                return $this->redirectToRoute('adminFamilles');
+            } catch (ForeignKeyConstraintViolationException $e) {
+                $this->addFlash('error', 'La famille ' . $famille->getLibelle() . ' ne peux pas etre supprime car il contient les animaux');
+                return $this->redirectToRoute('adminFamilles');
+            }
+        } */
+        if($this->isCsrfTokenValid('SUP' . $famille->getId(), $request->get('_token'))) {
+            /* $famille->getAnimaux(); */
+            $manager->remove($famille);
+            $manager->flush();
+            $this->addFlash('success', 'La famille a ete supprime');
+            return $this->redirectToRoute('adminFamilles');
+        }
     }   
 }

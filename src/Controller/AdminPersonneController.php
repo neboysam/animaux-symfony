@@ -78,4 +78,28 @@ class AdminPersonneController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/admin/personne/suppression/{id}", name="adminSuppPersonne", methods={"POST"})
+     */
+    public function adminSuppPersonne(Personne $personne, Request $request, EntityManagerInterface $manager): Response
+    {
+        /* if($this->isCsrfTokenValid('SUP' . $famille->getId(), $request->get('_token'))) {
+            try {
+                $manager->remove($famille);
+                $manager->flush();
+                $this->addFlash('success', 'La famille a ete supprime');
+                return $this->redirectToRoute('adminFamilles');
+            } catch (ForeignKeyConstraintViolationException $e) {
+                $this->addFlash('error', 'La famille ' . $famille->getLibelle() . ' ne peux pas etre supprime car il contient les animaux');
+                return $this->redirectToRoute('adminFamilles');
+            }
+        } */
+        if($this->isCsrfTokenValid('SUP' . $personne->getId(), $request->get('_token'))) {
+            $manager->remove($personne);
+            $manager->flush();
+            $this->addFlash('success', 'La personne a ete supprime');
+            return $this->redirectToRoute('adminPersonnes');
+        }
+    } 
 }
