@@ -4,7 +4,7 @@
 
 {% block monTitre %}Gestion des personnes{% endblock %}
 {% block body %}
-    <a href="{{path('adminCreatPersonne')}}" class="btn btn-primary">Ajouter Personne</a>
+    <a href="{{path('adminCreatPersonne')}}" class="btn btn-primary ms-2">Ajouter Personne</a>
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -23,13 +23,15 @@
                         {% endfor %}
                         {# {{ dump(animal.disposes) }} #}
                     </td>
-                    <td><a href="{{path('adminModifPersonne', {'id': personne.id})}}" class="btn btn-outline-warning">Modifier</a></td>
                     <td>
-                        <form action="{{path('adminSuppPersonne', {'id': personne.id})}}" method="POST">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ personne.id)}}">
-                            <input type="submit" value="Supprimer" class="btn btn-outline-danger">
-                        </form>
+                        <div class="d-flex justify-content-start">
+                            <a href="{{path('adminModifPersonne', {'id': personne.id})}}" class="btn btn-outline-warning me-2">Modifier</a>
+                            <form action="{{path('adminSuppPersonne', {'id': personne.id})}}" method="POST">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ personne.id)}}">
+                                <input type="submit" value="Supprimer" class="btn btn-outline-danger">
+                            </form>
+                        </div>
                     </td>
                 </tr>
             {% endfor %}

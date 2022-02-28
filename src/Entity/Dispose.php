@@ -20,12 +20,12 @@ class Dispose
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Animal::class, inversedBy="disposes")
+     * @ORM\ManyToOne(targetEntity=Animal::class, inversedBy="disposes", cascade={"remove"})
      */
     private $animal;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Personne::class, inversedBy="disposes")
+     * @ORM\ManyToOne(targetEntity=Personne::class, inversedBy="disposes", cascade={"remove"})
      */
     private $personne;
 

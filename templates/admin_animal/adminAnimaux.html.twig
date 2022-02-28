@@ -49,13 +49,15 @@
                         {% endfor %}
                         {# {{ dump(animal.disposes) }} #}
                     </td>
-                    <td><a href="{{path('adminModifAnimal', {'id': animal.id})}}" class="btn btn-outline-warning">Modifier</a></td>
                     <td>
-                        <form action="{{path('adminSuppAnimal', {'id': animal.id})}}" method="POST">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ animal.id)}}">
-                            <input type="submit" class="btn btn-outline-danger" value="Supprimer">
-                        </form>
+                        <div class="d-flex justify-content-start">
+                            <a href="{{path('adminModifAnimal', {'id': animal.id})}}" class="btn btn-outline-warning me-2">Modifier</a>
+                            <form action="{{path('adminSuppAnimal', {'id': animal.id})}}" method="POST">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ animal.id)}}">
+                                <input type="submit" class="btn btn-outline-danger" value="Supprimer">
+                            </form>
+                        </div>
                     </td>
                 </tr>
             {% endfor %}
