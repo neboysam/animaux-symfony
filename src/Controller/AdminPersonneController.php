@@ -61,8 +61,8 @@ class AdminPersonneController extends AbstractController
             */
 
             //this lines gives the following array:
-            dd($request->get('personne')->getDisposes()->toArray());
-            /**
+            //dd($request->get('personne')->getDisposes()->toArray());
+            /** this data comes from the database table 
              * array:4 [▼
              *   0 => App\Entity\Dispose {#1301
              *       -id: 23
@@ -90,29 +90,87 @@ class AdminPersonneController extends AbstractController
         *       }
             *]
              */
-            
-            $data = $request->request->all();
-            dd($data['personne']['animaux']); //array with animal ids' [ [0] => "52" [1] => "54" ]
+            //this gives the IDs of the animals that this person possess
+            /* $animauxDispose = $request->get('personne')->getDisposes()->toArray();
+            foreach($animauxDispose as $animal) {
+                dd($animal->getAnimal()->getId());
+            } */
+
+            //this is the array of number of animals of a person
+            /* $array = $request->get('personne')->getDisposes()->toArray();
+            foreach($array as $el) {
+                dd($el->getNb());
+            } */
+
+            //array with animal ids' [ [0] => "52" [1] => "54" ] that are selected from the form
+            /* $data = $request->request->all();
+            dd($data['personne']['animaux']); */
 
             //this gives the person's ID
-            dd((($request->get('personne')->getDisposes()->toArray())[0])->getPersonne()->getId());
+            //dd((($request->get('personne')->getDisposes()->toArray())[0])->getPersonne()->getId());
             
             //this gives the person's ID
             /* $personne = $form->getData();
             dd($personne->getId()); */
 
+            /* $animauxDispose = $request->get('personne')->getDisposes()->toArray();
+            foreach($animauxDispose as $animalBDD) {
+                $animauxIdBDD = $animalBDD->getAnimal()->getId();
 
-            $animaux = $form['animaux']->getData(); // array of animal objects sent by the form
-            if($animaux) {
-                foreach ($animaux as $animal) {
-                    $d = new Dispose();
+                $animauxIdForm = ($request->request->all())['personne']['animaux'];
+                foreach($animauxIdForm as $animalForm) {
+                    if($animauxIdBDD == $animalForm) {
+                        echo "Identique " . $animalForm;
+                    } else {
+                        "Pas identique " . $animalForm . " " . $animauxIdBDD;
+                    }
+                }
+            } */
+
+            //this gives an array of App\Entity\Dispose objects: id, animal object, personne object and nb
+            //dd($request->get('personne')->getDisposes()->toArray());
+
+            /* dd(($request->request->all())); */
+
+            //array of animal objects from the form
+            //dd(($form['animaux']->getData())->toArray());
+
+            //array of animals' id from the form
+            //$animauxIdForm = ($request->request->all())['personne']['animaux'];
+
+            //array of animal objects from the form
+            $animauxForm = $form['animaux']->getData()->toArray();
+            if($animauxForm) {
+                foreach ($animauxForm as $animalForm) {
+                    //array of animal objects from the database, dispose table
+                    $animauxDispose = $request->get('personne')->getDisposes()->toArray();
+                        foreach($animauxDispose as $animalBDD) {
+                            $animalIdBDD = $animalBDD->getAnimal()->getId();
+                            $animalIdForm = $animalForm->getId();
+                            if($animalIdBDD === $animalIdForm) {
+                                $animalBDD->setNb(($animalBDD->getNb()) + 1);
+                            } 
+                            if($animalIdBDD !== $animalIdForm) {
+                                $d = new Dispose();
+                                $d->setPersonne($personne)
+                                ->setAnimal($animalForm)
+                                ->setNb(0)
+                                ;
+                            }
+                        }
+                        
+                    
+                    /* $d = new Dispose();
                     $d->setPersonne($personne)
                       ->setAnimal($animal)
                       ->setNb(0)
-                    ;
-                    $manager->persist($personne); // or, in the Dispose entity to add cascade={"persist"} in $animal and $personne annotations
-                    $manager->persist($d);
+                    ; */
+                    // or, in the Dispose entity to add cascade={"persist"} in $animal and $personne annotations
+                    /* $manager->persist($personne); 
+                    $manager->persist($d); */
                 }
+                $manager->persist($personne); 
+                $manager->persist($d);
             }
             $manager->persist($personne);
             $manager->flush();
