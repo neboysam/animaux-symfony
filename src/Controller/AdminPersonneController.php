@@ -6,6 +6,7 @@ use App\Entity\Animal;
 use App\Entity\Dispose;
 use App\Entity\Personne;
 use App\Form\PersonneType;
+use App\Repository\AnimalRepository;
 use App\Repository\PersonneRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,8 +31,9 @@ class AdminPersonneController extends AbstractController
      * @Route("/admin/creation/personne", name="adminCreatPersonne")
      * @Route("/admin/personne/{id}", name="adminModifPersonne")
      */
-    public function adminModifPersonnes(Personne $personne = null, Request $request, EntityManagerInterface $manager): Response
+    public function adminModifPersonnes(Personne $personne = null, AnimalRepository $repository, Request $request, EntityManagerInterface $manager): Response
     {
+        $animaux = $repository->findAll();
         if(!$personne) {
             $personne = new Personne();
         }
@@ -109,7 +111,7 @@ class AdminPersonneController extends AbstractController
             //this gives the person's ID
             //dd((($request->get('personne')->getDisposes()->toArray())[0])->getPersonne()->getId());
             
-            //this gives the person's ID
+            //this gives the person's ID from the form
             /* $personne = $form->getData();
             dd($personne->getId()); */
 
@@ -131,6 +133,15 @@ class AdminPersonneController extends AbstractController
             //dd($request->get('personne')->getDisposes()->toArray());
 
             /* dd(($request->request->all())); */
+            //dd($animauxForm = $form['animaux']->getData()->toArray());
+
+            //personne object from the database
+            /* dd($personne->getDisposes()->toArray());
+            $personneDisposes = $personne->getDisposes()->toArray();
+            foreach ($personneDisposes as $dispose) {
+                //animals' id from the database for the selected person $dispose->getAnimal()->getId()
+                array_diff_assoc($animauxForm = $form['animaux']->getData()->toArray(), $dispose->getAnimal());
+            } */
 
             //array of animal objects from the form
             //dd(($form['animaux']->getData())->toArray());
@@ -138,25 +149,31 @@ class AdminPersonneController extends AbstractController
             //array of animals' id from the form
             //$animauxIdForm = ($request->request->all())['personne']['animaux'];
 
+            //za svaki animal id iz formulara koji se za datu osobu ne nalazi u bazi treba napraviti novi red u Dispose: new Dispose()
+
             //array of animal objects from the form
             $animauxForm = $form['animaux']->getData()->toArray();
             if($animauxForm) {
                 foreach ($animauxForm as $animalForm) {
-                    //array of animal objects from the database, dispose table
-                    $animauxDispose = $request->get('personne')->getDisposes()->toArray();
-                        foreach($animauxDispose as $animalBDD) {
-                            $animalIdBDD = $animalBDD->getAnimal()->getId();
+                    //array of animal objects from the request (form), dispose table
+                    //$animauxDispose = $request->get('personne')->getDisposes()->toArray();
+                    $personneDisposes = $personne->getDisposes()->toArray();
+                        foreach($personneDisposes as $dispose) {
+                            $animalIdPersonne = $dispose->getAnimal()->getId();
                             $animalIdForm = $animalForm->getId();
-                            if($animalIdBDD === $animalIdForm) {
-                                $animalBDD->setNb(($animalBDD->getNb()) + 1);
-                            } 
-                            if($animalIdBDD !== $animalIdForm) {
-                                $d = new Dispose();
-                                $d->setPersonne($personne)
-                                ->setAnimal($animalForm)
-                                ->setNb(0)
-                                ;
+                            if($animalIdPersonne === $animalIdForm) {
+                                $dispose->setNb(($dispose->getNb()) + 1);
                             }
+                            foreach($animaux as $animal) {
+                                $animalIdBDD = $animal->getId();
+                                if($animalIdPersonne !== $animalIdBDD) {
+                                    $d = new Dispose();
+                                    $d->setPersonne($personne)
+                                    ->setAnimal($animalForm)
+                                    ->setNb(0);
+                                    $manager->persist($d);
+                                }
+                            }                            
                         }
                         
                     
@@ -169,9 +186,8 @@ class AdminPersonneController extends AbstractController
                     /* $manager->persist($personne); 
                     $manager->persist($d); */
                 }
-                $manager->persist($personne); 
-                $manager->persist($d);
             }
+            
             $manager->persist($personne);
             $manager->flush();
             return $this->redirectToRoute('adminPersonnes');
