@@ -87,7 +87,7 @@ class Animal
     private $continents;
 
     /**
-     * @ORM\OneToMany(targetEntity=Dispose::class, mappedBy="animal") 
+     * @ORM\OneToMany(targetEntity=Dispose::class, mappedBy="animal")
      */
     private $disposes;
 

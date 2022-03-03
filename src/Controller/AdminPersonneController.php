@@ -6,7 +6,6 @@ use App\Entity\Animal;
 use App\Entity\Dispose;
 use App\Entity\Personne;
 use App\Form\PersonneType;
-use App\Repository\AnimalRepository;
 use App\Repository\PersonneRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,9 +30,8 @@ class AdminPersonneController extends AbstractController
      * @Route("/admin/creation/personne", name="adminCreatPersonne")
      * @Route("/admin/personne/{id}", name="adminModifPersonne")
      */
-    public function adminModifPersonnes(Personne $personne = null, AnimalRepository $repository, Request $request, EntityManagerInterface $manager): Response
+    public function adminModifPersonnes(Personne $personne = null, Request $request, EntityManagerInterface $manager): Response
     {
-        $animaux = $repository->findAll();
         if(!$personne) {
             $personne = new Personne();
         }
@@ -136,12 +134,34 @@ class AdminPersonneController extends AbstractController
             //dd($animauxForm = $form['animaux']->getData()->toArray());
 
             //personne object from the database
-            /* dd($personne->getDisposes()->toArray());
+            //dd($personne->getDisposes()->toArray());
             $personneDisposes = $personne->getDisposes()->toArray();
+            $animauxPersonneArray = [];
             foreach ($personneDisposes as $dispose) {
                 //animals' id from the database for the selected person $dispose->getAnimal()->getId()
-                array_diff_assoc($animauxForm = $form['animaux']->getData()->toArray(), $dispose->getAnimal());
-            } */
+                //array_diff_assoc($animauxForm = $form['animaux']->getData()->toArray(), $dispose->getAnimal());
+                $animauxPersonneArray[] = $dispose->getAnimal();
+                
+                /* dd($dispose->getAnimal()); */
+            }
+            /* dd($animauxPersonneArray); */
+            $animauxFormArray = $form['animaux']->getData()->toArray();
+            /* function compareCars(Animal $objA, Animal $objB) {
+                return $objA->getId() <=> $objB->getId();
+              } */
+            //dd($animauxFormArray);
+
+            $compareId = function (Animal $animal1, Animal $animal2) {
+                return $animal1->getId() <=> $animal2->getId();
+              };
+            //if not empty: there are animals selected from the form that person does not have  
+            $diff = array_udiff($animauxFormArray, $animauxPersonneArray, $compareId);
+            
+            //if not empty: only all animals that the person already has; if empty: only all animals that she does not have were selected
+            $diffArray = array_udiff($animauxFormArray, $diff, $compareId);
+
+            /* dd($diff); */
+            //array_diff(($animauxForm = $form['animaux']->getData()->toArray()), $animauxArray);
 
             //array of animal objects from the form
             //dd(($form['animaux']->getData())->toArray());
@@ -149,46 +169,71 @@ class AdminPersonneController extends AbstractController
             //array of animals' id from the form
             //$animauxIdForm = ($request->request->all())['personne']['animaux'];
 
-            //za svaki animal id iz formulara koji se za datu osobu ne nalazi u bazi treba napraviti novi red u Dispose: new Dispose()
+            //za svaki animal id iz formulara koji se za datu osobu ne nalazi u array animaux date personne treba napraviti novi red u Dispose: new Dispose()
 
             //array of animal objects from the form
-            $animauxForm = $form['animaux']->getData()->toArray();
-            if($animauxForm) {
-                foreach ($animauxForm as $animalForm) {
+            //$animauxForm = $form['animaux']->getData()->toArray();
+            if($animauxFormArray) {
+                foreach ($animauxFormArray as $animalForm) {
+                    $personneDisposes = $personne->getDisposes()->toArray();
+                    //no difference: only all animals that already belong to the person have been selected from the form
+                    if(!$diff && $diffArray) {
                     //array of animal objects from the request (form), dispose table
                     //$animauxDispose = $request->get('personne')->getDisposes()->toArray();
-                    $personneDisposes = $personne->getDisposes()->toArray();
                         foreach($personneDisposes as $dispose) {
-                            $animalIdPersonne = $dispose->getAnimal()->getId();
+                            $animalIdBDD = $dispose->getAnimal()->getId();
                             $animalIdForm = $animalForm->getId();
-                            if($animalIdPersonne === $animalIdForm) {
+                            if($animalIdBDD === $animalIdForm) {
                                 $dispose->setNb(($dispose->getNb()) + 1);
-                            }
-                            foreach($animaux as $animal) {
-                                $animalIdBDD = $animal->getId();
-                                if($animalIdPersonne !== $animalIdBDD) {
-                                    $d = new Dispose();
-                                    $d->setPersonne($personne)
-                                    ->setAnimal($animalForm)
-                                    ->setNb(0);
-                                    $manager->persist($d);
-                                }
+                                $manager->persist($personne);
                             }                            
+                        } 
+                    }
+                } 
+                //there are animals selected from the form that either already belong to or do not belong to the person
+                //if $diffArray not empty: only all animals that already belong to person
+                if($diff && $diffArray) {
+                    //dd($diff); //selected - does not have: new Dispose
+                    //dd($diffArray); //selected - does have: setNb+1
+                    if($diff) {
+                        foreach($diff as $animalOne) {
+                            $d = new Dispose();
+                            $d->setPersonne($personne)
+                            ->setAnimal($animalOne)
+                            ->setNb(1);
+                            $manager->persist($d);
+                            // or, in the Dispose entity to add cascade={"persist"} in $animal and $personne annotations
+                            $manager->persist($personne);
+                            
                         }
-                        
-                    
-                    /* $d = new Dispose();
-                    $d->setPersonne($personne)
-                      ->setAnimal($animal)
-                      ->setNb(0)
-                    ; */
-                    // or, in the Dispose entity to add cascade={"persist"} in $animal and $personne annotations
-                    /* $manager->persist($personne); 
-                    $manager->persist($d); */
+                    }
+                    if($diffArray) {
+                        foreach($diffArray as $animalTwo) {
+                            foreach($personneDisposes as $dispose) {
+                                $animalIdBDD = $dispose->getAnimal()->getId();
+                                $animalIdForm = $animalTwo->getId();
+                                if($animalIdBDD === $animalIdForm) {
+                                    $dispose->setNb(($dispose->getNb()) + 1);
+                                    $manager->persist($personne);
+                                }                            
+                            }
+                        }
+                    }    
                 }
+                //only all selected animals that do not belong to the person
+                if($diff && !$diffArray) {
+                    //dd($diff);
+                    foreach($diff as $diffAnimal) {
+                        $d = new Dispose();
+                        $d->setPersonne($personne)
+                        ->setAnimal($diffAnimal)
+                        ->setNb(1);
+                        $manager->persist($d);
+                        // or, in the Dispose entity to add cascade={"persist"} in $animal and $personne annotations
+                        $manager->persist($personne);
+                    }
+                }      
             }
-            
-            $manager->persist($personne);
             $manager->flush();
             return $this->redirectToRoute('adminPersonnes');
         }

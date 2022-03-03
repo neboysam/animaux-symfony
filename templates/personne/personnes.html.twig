@@ -8,11 +8,11 @@
         <div class="row d-flex justify-content-around">
             {% for personne in personnes %}
                 <div class="card mb-3" style="max-width: 540px;">
-                <h3 class=""><a href="">{{personne.nom}}</a></h3>
+                <h3 class="">{{personne.nom}}</h3>
                     <div class="row g-0">
                     <h4>Liste des animaux possédés</h4>
                         {% for element in personne.disposes %}{# personne.disposes is an object containing id, nb and two objects: animal and personne #}
-                            <div class="col-md-4">
+                            <div class="col-md-4 mb-3">
                                 <img src="{{asset('images/animaux/' ~ element.animal.image)}}" class="img-fluid rounded-start perso-imgFood" alt="image">
                                 {# {{ dump(personne.disposes) }} #}
                             </div>
