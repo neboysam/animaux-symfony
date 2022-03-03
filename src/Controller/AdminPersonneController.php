@@ -204,7 +204,6 @@ class AdminPersonneController extends AbstractController
                             $manager->persist($d);
                             // or, in the Dispose entity to add cascade={"persist"} in $animal and $personne annotations
                             $manager->persist($personne);
-                            
                         }
                     }
                     if($diffArray) {
@@ -215,7 +214,7 @@ class AdminPersonneController extends AbstractController
                                 if($animalIdBDD === $animalIdForm) {
                                     $dispose->setNb(($dispose->getNb()) + 1);
                                     $manager->persist($personne);
-                                }                            
+                                }
                             }
                         }
                     }    
