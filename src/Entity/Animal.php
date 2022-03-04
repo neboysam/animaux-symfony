@@ -75,19 +75,24 @@ class Animal
      */
     private $dangereux;
 
+    //if we want to preserve the animals that belong to a familly upon its deletion, add to $famille annotation below:
+    //@ORM\JoinColumn(nullable=true, name="famille_id", referencedColumnName="id", onDelete="SET NULL") and then
+    //php bin/console doctrine:schema:update --force to update database schema
+    //php bin/console doctrine:schema:update --dump-sql to check the database status
+
     /**
      * @ORM\ManyToOne(targetEntity=Famille::class, inversedBy="animaux")
-     * @ORM\JoinColumn(nullable=true, name="famille_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="famille_id", referencedColumnName="id", nullable=false)
      */
     private $famille;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Continent::class, mappedBy="animaux") 
+     * @ORM\ManyToMany(targetEntity=Continent::class, mappedBy="animaux")
      */
     private $continents;
 
     /**
-     * @ORM\OneToMany(targetEntity=Dispose::class, mappedBy="animal")
+     * @ORM\OneToMany(targetEntity=Dispose::class, mappedBy="animal", cascade={"remove"})
      */
     private $disposes;
 

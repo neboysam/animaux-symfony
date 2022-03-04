@@ -30,7 +30,7 @@ class Famille
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity=Animal::class, mappedBy="famille")
+     * @ORM\OneToMany(targetEntity=Animal::class, mappedBy="famille", cascade={"remove"})
      */
     private $animaux;
 

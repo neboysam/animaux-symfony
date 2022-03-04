@@ -26,7 +26,7 @@ class Continent
     private $libelle;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Animal::class, inversedBy="continents") 
+     * @ORM\ManyToMany(targetEntity=Animal::class, inversedBy="continents")
      */
     private $animaux;
 
