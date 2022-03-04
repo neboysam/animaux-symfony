@@ -38,6 +38,7 @@ class AdminPersonneController extends AbstractController
         $form = $this->createForm(PersonneType::class, $personne);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
+            $modifPersonne = $personne->getId() !== null;
             /* $disposes = $form->getData()->getDisposes(); */
             /* foreach($disposes as $dispose) {
                 dd($dispose);
@@ -234,6 +235,7 @@ class AdminPersonneController extends AbstractController
                 }      
             }
             $manager->flush();
+            $this->addFlash('success', ($modifPersonne) ? 'La personne a été modifiée.' : 'La personne a été ajoutée');
             return $this->redirectToRoute('adminPersonnes');
         }
         return $this->render('admin_personne/adminModifPersonne.html.twig', [

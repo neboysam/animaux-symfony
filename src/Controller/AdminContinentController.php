@@ -36,10 +36,11 @@ class AdminContinentController extends AbstractController
         $form = $this->createForm(ContinentType::class, $continent);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
+            $modifCont = $continent->getId() !== null;
             $manager->persist($continent);
             $manager->flush();
-            $this->addFlash('success', "Le continent a été modifié.");
-            return $this->redirectToRoute('continents');
+            $this->addFlash('success', ($modifCont) ? "Le continent a été modifié." : "Le continent a été ajouté.");
+            return $this->redirectToRoute('adminContinents');
         }
         return $this->render('admin_continent/adminModifContinent.html.twig', [
             'continent' => $continent,

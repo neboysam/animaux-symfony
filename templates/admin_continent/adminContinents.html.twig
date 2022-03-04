@@ -4,6 +4,11 @@
 
 {% block monTitre %}Gestion des continents{% endblock %}
 {% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{message}}
+        </div>
+    {% endfor %}
     <a href="{{path('adminCreatContinent')}}" class="btn btn-primary ms-2">Ajouter Continent</a>
 	<table class="table table-striped">
 		<thead>

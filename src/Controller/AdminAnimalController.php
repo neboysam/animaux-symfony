@@ -52,7 +52,7 @@ class AdminAnimalController extends AbstractController
             $manager->persist($animal);
             $manager->flush();
             $this->addFlash('success', ($modifAnimal) ? "L'animal a été modifié." : "L'animal a été creé");
-            return $this->redirectToRoute('animaux');
+            return $this->redirectToRoute('adminAnimaux');
         }
         return $this->render('admin_animal/adminModifAnimal.html.twig', [
             'animal' => $animal,

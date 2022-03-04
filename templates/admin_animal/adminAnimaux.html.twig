@@ -4,7 +4,12 @@
 
 {% block monTitre %}Gestion des animaux{% endblock %}
 {% block body %}
-<a href="{{path('adminCreatAnimal')}}" class="btn btn-primary ms-2">Ajouter Animale</a>
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{message}}
+        </div>
+    {% endfor %}
+    <a href="{{path('adminCreatAnimal')}}" class="btn btn-primary ms-2">Ajouter Animale</a>
 	<table class="table table-striped">
 		<thead>
 			<tr>

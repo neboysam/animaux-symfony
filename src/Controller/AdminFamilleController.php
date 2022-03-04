@@ -38,7 +38,7 @@ class AdminFamilleController extends AbstractController
         $form = $this->createForm(FamilleType::class, $famille);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
-            $modif = $famille->getId() !== null;
+            $modifFamille = $famille->getId() !== null;
             $animaux = $form['animaux']->getData(); //Doctrine\Common\Collections\ArrayCollection
             if($animaux) {
                 foreach($animaux as $animal) {
@@ -48,7 +48,7 @@ class AdminFamilleController extends AbstractController
             }
             $manager->persist($famille);
             $manager->flush();
-            $this->addFlash('success', ($modif) ? 'La famille a été modifiée.' : 'La famille a été ajoutée');
+            $this->addFlash('success', ($modifFamille) ? 'La famille a été modifiée.' : 'La famille a été ajoutée');
             return $this->redirectToRoute('adminFamilles');
         } 
         return $this->render('admin_famille/adminModifFamille.html.twig', [
