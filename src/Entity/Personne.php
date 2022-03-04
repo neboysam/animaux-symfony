@@ -25,7 +25,7 @@ class Personne
     private $nom;
 
     /**
-     * @ORM\OneToMany(targetEntity=Dispose::class, mappedBy="personne", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Dispose::class, mappedBy="personne")
      */
     private $disposes;
 
