@@ -2,13 +2,20 @@
 
 namespace App\Entity;
 
-use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UtilisateurRepository;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UtilisateurRepository::class)
+ * @UniqueEntity(
+ * fields = {"username"},
+ * message = "L'utilisateur existe deja"
+ * )
  */
-class Utilisateur
+class Utilisateur implements UserInterface
 {
     /**
      * @ORM\Id
@@ -27,6 +34,9 @@ class Utilisateur
      */
     private $password;
 
+    /**
+     * @Assert\EqualTo(propertyPath="password", message="Les mdp ne correspondent pas")
+     */
     private $verifPassword;
 
     public function getVerifPassword(): ?string
@@ -85,5 +95,20 @@ class Utilisateur
         $this->roles = $roles;
 
         return $this;
+    }
+
+    public function getUserIdentifier()
+    {
+        return $this->getUsername();
+    }
+
+    public function getSalt()
+    {
+        
+    }
+
+    public function eraseCredentials()
+    {
+        
     }
 }
