@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class GlobalController extends AbstractController
 {
@@ -42,5 +43,26 @@ class GlobalController extends AbstractController
         return $this->render('global/inscription.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/connexion", name="connexion")
+     */
+
+     public function connexion(AuthenticationUtils $util)
+     {
+        return $this->render('global/connexion.html.twig', [
+            "lastUserName" => $util->getLastUsername(),
+            "error" => $util->getLastAuthenticationError()
+        ]);
+     }
+
+     /**
+     * @Route("/deconnexion", name="deconnexion")
+     */
+
+    public function deconnexion()
+    {
+
     }
 }

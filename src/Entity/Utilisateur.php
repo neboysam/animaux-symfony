@@ -85,9 +85,9 @@ class Utilisateur implements UserInterface
         return $this;
     }
 
-    public function getRoles(): ?string
+    public function getRoles()
     {
-        return $this->roles;
+        return [$this->roles];
     }
 
     public function setRoles(string $roles): self
